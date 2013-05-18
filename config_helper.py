@@ -27,9 +27,10 @@ def LoadConfig(config_file):
 
 
 class SlaveConfig(object):
-  def __init__(self, suffix, has_lint=False):
+  def __init__(self, suffix, has_lint=False, has_tcmalloc=False):
     self._suffix = suffix
     self._has_lint = has_lint
+    self._has_tcmalloc = has_tcmalloc
 
   @property
   def suffix(self):
@@ -39,13 +40,18 @@ class SlaveConfig(object):
   def has_lint(self):
     return self._has_lint
 
+  @property
+  def has_tcmalloc(self):
+    return self._has_tcmalloc
+
 
 class BuildSlave(object):
-  def __init__(self, platform, arch, suffix, has_lint):
+  def __init__(self, platform, arch, slave_config):
     self._platform = platform
     self._arch = arch
-    self._suffix = suffix
-    self._has_lint = has_lint
+    self._suffix = slave_config.suffix
+    self._has_lint = slave_config.has_lint
+    self._has_tcmalloc = slave_config.has_tcmalloc
 
   def name(self):
     """Return the name of this slave."""
@@ -60,10 +66,18 @@ class BuildSlave(object):
   def has_lint(self):
     return self._has_lint
 
+  @property
+  def has_tcmalloc(self):
+    return self._has_tcmalloc
+
 
 def HasLintFilter(slave):
   """Filter on slaves that have lint installed."""
   return slave.has_lint
+
+def HasTCMalloc(slave):
+  """Filter on slaves that have tcmalloc installed."""
+  return slave.has_tcmalloc
 
 class SlaveStore(object):
   """Holds the BuildSlave objects."""
@@ -72,8 +86,7 @@ class SlaveStore(object):
     for platform, platform_spec in slave_config.iteritems():
       for arch, slave_names in platform_spec.iteritems():
         for slave in slave_names:
-          self._slaves.append(BuildSlave(
-            platform, arch, slave.suffix, slave.has_lint))
+          self._slaves.append(BuildSlave(platform, arch, slave))
 
   def GetSlaves(self, slave_filter=None):
     """Returns all slaves matching the optional filter."""
