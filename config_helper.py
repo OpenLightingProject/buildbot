@@ -27,10 +27,11 @@ def LoadConfig(config_file):
 
 
 class SlaveConfig(object):
-  def __init__(self, suffix, has_lint=False, has_tcmalloc=False):
+  def __init__(self, suffix, has_lint=False, has_tcmalloc=False, is_slow=False):
     self._suffix = suffix
     self._has_lint = has_lint
     self._has_tcmalloc = has_tcmalloc
+    self._is_slow = is_slow
 
   @property
   def suffix(self):
@@ -44,6 +45,10 @@ class SlaveConfig(object):
   def has_tcmalloc(self):
     return self._has_tcmalloc
 
+  @property
+  def is_slow(self):
+    return self._is_slow
+
 
 class BuildSlave(object):
   def __init__(self, platform, arch, slave_config):
@@ -52,6 +57,7 @@ class BuildSlave(object):
     self._suffix = slave_config.suffix
     self._has_lint = slave_config.has_lint
     self._has_tcmalloc = slave_config.has_tcmalloc
+    self._is_slow = slave_config.is_slow
 
   def name(self):
     """Return the name of this slave."""
@@ -70,6 +76,9 @@ class BuildSlave(object):
   def has_tcmalloc(self):
     return self._has_tcmalloc
 
+  @property
+  def is_slow(self):
+    return self._is_slow
 
 def HasLintFilter(slave):
   """Filter on slaves that have lint installed."""
@@ -78,6 +87,10 @@ def HasLintFilter(slave):
 def HasTCMalloc(slave):
   """Filter on slaves that have tcmalloc installed."""
   return slave.has_tcmalloc
+
+def IsSlow(slave):
+  """Filter on slaves that are slow."""
+  return slave.is_slow
 
 class SlaveStore(object):
   """Holds the BuildSlave objects."""
