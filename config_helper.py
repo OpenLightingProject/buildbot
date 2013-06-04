@@ -27,9 +27,10 @@ def LoadConfig(config_file):
 
 
 class SlaveConfig(object):
-  def __init__(self, suffix, has_lint=False, has_tcmalloc=False, is_slow=False):
+  def __init__(self, suffix, has_cpp_lint=False, has_js_lint=False, has_tcmalloc=False, is_slow=False):
     self._suffix = suffix
-    self._has_lint = has_lint
+    self._has_cpp_lint = has_cpp_lint
+    self._has_js_lint = has_js_lint
     self._has_tcmalloc = has_tcmalloc
     self._is_slow = is_slow
 
@@ -38,8 +39,12 @@ class SlaveConfig(object):
     return self._suffix
 
   @property
-  def has_lint(self):
-    return self._has_lint
+  def has_cpp_lint(self):
+    return self._has_cpp_lint
+
+  @property
+  def has_js_lint(self):
+    return self._has_js_lint
 
   @property
   def has_tcmalloc(self):
@@ -55,7 +60,8 @@ class BuildSlave(object):
     self._platform = platform
     self._arch = arch
     self._suffix = slave_config.suffix
-    self._has_lint = slave_config.has_lint
+    self._has_cpp_lint = slave_config.has_cpp_lint
+    self._has_js_lint = slave_config.has_js_lint
     self._has_tcmalloc = slave_config.has_tcmalloc
     self._is_slow = slave_config.is_slow
 
@@ -69,8 +75,12 @@ class BuildSlave(object):
     return open(path).read().strip()
 
   @property
-  def has_lint(self):
-    return self._has_lint
+  def has_cpp_lint(self):
+    return self._has_cpp_lint
+
+  @property
+  def has_js_lint(self):
+    return self._has_js_lint
 
   @property
   def has_tcmalloc(self):
@@ -80,9 +90,13 @@ class BuildSlave(object):
   def is_slow(self):
     return self._is_slow
 
-def HasLintFilter(slave):
-  """Filter on slaves that have lint installed."""
-  return slave.has_lint
+def HasCPPLintFilter(slave):
+  """Filter on slaves that have C++ lint installed."""
+  return slave.has_cpp_lint
+
+def HasJSLintFilter(slave):
+  """Filter on slaves that have JS lint installed."""
+  return slave.has_js_lint
 
 def HasTCMalloc(slave):
   """Filter on slaves that have tcmalloc installed."""
