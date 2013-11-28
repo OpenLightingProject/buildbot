@@ -28,13 +28,14 @@ def LoadConfig(config_file):
 
 class SlaveConfig(object):
   def __init__(self, suffix, has_cpp_lint=False, has_js_lint=False,
-               has_tcmalloc=False, is_slow=False, generate_man=False,
-               no_build=False):
+               has_tcmalloc=False, is_slow=False, generate_doc=False,
+               generate_man=False, no_build=False):
     self._suffix = suffix
     self._has_cpp_lint = has_cpp_lint
     self._has_js_lint = has_js_lint
     self._has_tcmalloc = has_tcmalloc
     self._is_slow = is_slow
+    self._generate_doc = generate_doc
     self._generate_man = generate_man
     self._no_build = no_build
 
@@ -59,6 +60,10 @@ class SlaveConfig(object):
     return self._is_slow
 
   @property
+  def generate_doc(self):
+    return self._generate_doc
+
+  @property
   def generate_man(self):
     return self._generate_man
 
@@ -76,6 +81,7 @@ class BuildSlave(object):
     self._has_js_lint = slave_config.has_js_lint
     self._has_tcmalloc = slave_config.has_tcmalloc
     self._is_slow = slave_config.is_slow
+    self._generate_doc = slave_config.generate_doc
     self._generate_man = slave_config.generate_man
     self._no_build = slave_config.no_build
 
@@ -105,6 +111,10 @@ class BuildSlave(object):
     return self._is_slow
 
   @property
+  def generate_doc(self):
+    return self._generate_doc
+
+  @property
   def generate_man(self):
     return self._generate_man
 
@@ -127,6 +137,10 @@ def HasTCMalloc(slave):
 def IsSlow(slave):
   """Filter on slaves that are slow."""
   return slave.is_slow
+
+def GenerateDoc(slave):
+  """Filter on slaves that generate doxygen doc."""
+  return slave.generate_doc
 
 def GenerateMan(slave):
   """Filter on slaves that generate man pages."""
