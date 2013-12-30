@@ -89,9 +89,13 @@ class BuildSlave(object):
     """Return the name of this slave."""
     return '%s-%s-%s' % (self._platform, self._arch, self._suffix)
 
+  def password_file_path(self):
+    """Get the file path that contains the password for this slave."""
+    return os.path.join(os.path.dirname(__file__), "%s.pass" % self.name())
+
   def password(self):
     """Get the password for this slave."""
-    path = os.path.join(os.path.dirname(__file__), "%s.pass" % self.name())
+    path = self.password_file_path()
     return open(path).read().strip()
 
   @property
