@@ -12,13 +12,12 @@ python:
 script:
   - "bash -ex .travis-ci.sh"
 
-cache: apt
-
 before_install:
- - sudo apt-get update -qq
- - sudo apt-get install -qq buildbot
+ - pip install --use-mirrors -r requirements.txt
 
 notifications:
-  irc: "chat.freenode.net#openlighting"
-  on_success: change
-  on_failure: change
+  irc:
+    channels:
+     - "chat.freenode.net#openlighting"
+    on_success: change
+    on_failure: change
