@@ -1,0 +1,24 @@
+# Based on https://github.com/zeromq/zeromq-buildbot/blob/master/.travis.yml
+
+language: python
+
+python:
+  - "2.6"
+  - "2.7"
+#  - "3.2" # buildbot does not currently support Python 3
+#  - "3.3" # buildbot does not currently support Python 3
+#  - "pypy" # issues with travis halting during buildbot setup
+
+script:
+  - "bash -ex .travis-ci.sh"
+
+cache: apt
+
+before_install:
+ - sudo apt-get update -qq
+ - sudo apt-get install -qq buildbot
+
+notifications:
+  irc: "chat.freenode.net#openlighting"
+  on_success: change
+  on_failure: change
