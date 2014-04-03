@@ -9,7 +9,7 @@ if [ -n "$output" ]; then
   git merge origin/master;
   buildbot checkconfig master.cfg
   # checkconfig exits 1 if everything is ok.
-  if [ $? -eq 1]; then
+  if [ $? -eq 1 ]; then
     buildbot reconfig
   else
     echo "Buildbot config is bad";
