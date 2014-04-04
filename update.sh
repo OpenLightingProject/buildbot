@@ -1,5 +1,6 @@
 #!/bin/bash
 
+set -x
 repo=$(dirname $0)
 cd $repo
 git fetch origin
