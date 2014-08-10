@@ -9,5 +9,6 @@ via .gitignore).
 See http://www.opendmx.net/index.php/OLA_Buildbot for instructions on setting
 up a buildslave.
 
-There is a cronscript that runs on the server which pulls from the git repo and
-reloads the buildmaster. Any changes submitted should go live in 5 minutes.
+There is a cronscript that runs on the server (update.sh) which pulls from the
+git repo and reloads the buildmaster. Any changes submitted should go live in
+5 minutes.
