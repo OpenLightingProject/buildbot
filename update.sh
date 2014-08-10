@@ -11,8 +11,8 @@ if [ -n "$output" ]; then
   set -x
   git merge origin/master;
   $BUILDBOT checkconfig master.cfg
-  # checkconfig exits 1 if everything is ok.
-  if [ $? -eq 1 ]; then
+  # checkconfig exits 0 if everything is ok.
+  if [ $? -eq 0 ]; then
     $BUILDBOT reconfig
   else
     echo "Buildbot config is bad";
