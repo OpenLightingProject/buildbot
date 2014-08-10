@@ -1,5 +1,7 @@
 #!/bin/bash
 
+BUILDBOT=/usr/local/bin/buildbot
+
 repo=$(dirname $0)
 cd $repo
 git fetch origin
@@ -8,10 +10,10 @@ if [ -n "$output" ]; then
   echo "Merging";
   set -x
   git merge origin/master;
-  buildbot checkconfig master.cfg
+  $BUILDBOT checkconfig master.cfg
   # checkconfig exits 1 if everything is ok.
   if [ $? -eq 1 ]; then
-    buildbot reconfig
+    $BUILDBOT reconfig
   else
     echo "Buildbot config is bad";
   fi;
