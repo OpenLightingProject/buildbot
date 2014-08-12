@@ -14,7 +14,13 @@
 #
 # Helper code for the Open Lighting Project buildbot configs.
 
+import operator
 import os
+
+def pickLatestBuild(builder, requests): 
+  """Build most recent builds first, from webkit's buildbot config"""
+  return max(requests, key=operator.attrgetter("submittedAt")) 
+
 
 def LoadConfig(config_file):
   """Load the buildbot config from a config file."""
