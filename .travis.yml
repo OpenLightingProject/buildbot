@@ -14,7 +14,7 @@ script:
 
 before_install:
   # We need a minimum of 0.8.6, so try a PPA
-  - sudo add-apt-repository ppa:caktux/ppa -y
+  - sudo add-apt-repository ppa:danirus/buildbot -y
   - sudo apt-get update -qq
 
 install:
