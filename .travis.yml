@@ -14,7 +14,10 @@ script:
 
 before_install:
   - sudo apt-get update -qq
+
+install:
   - sudo apt-get install -qq buildbot
+  - ls -al /usr/lib/python2.6/dist-packages/buildbot/schedulers/
 
 notifications:
   irc:
