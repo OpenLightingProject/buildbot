@@ -19,7 +19,6 @@ before_install:
 
 install:
   - sudo apt-get install -qq buildbot
-  - dpkg -L buildbot
 
 notifications:
   irc:
