@@ -13,6 +13,7 @@ script:
   - "bash -ex .travis-ci.sh"
 
 before_install:
+ - pip install --upgrade pip
  - pip install --use-mirrors --allow-external sqlalchemy-migrate --allow-unverified sqlalchemy-migrate -r requirements.txt
 
 notifications:
