@@ -14,8 +14,7 @@ script:
 
 before_install:
   # Remove some flaky repos that keep timing out
-  - grep -iIR mongo /etc/apt/sources.list.d/
-  - sudo add-apt-repository -r 'deb http://downloads-distro.mongodb.org/repo/debian-sysvinit dist 10gen'
+  - sudo rm /etc/apt/sources.list.d/mongodb.list
   # We need a minimum of 0.8.6, so use a PPA
   - sudo add-apt-repository ppa:danirus/buildbot -y
   - sudo apt-get update -qq
