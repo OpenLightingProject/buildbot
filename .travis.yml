@@ -14,6 +14,8 @@ script:
 
 before_install:
   # Remove some flaky repos that keep timing out
+  - cat /etc/apt/sources.list
+  - cat /etc/apt/sources.list.d/*
   - sudo add-apt-repository -r http://downloads-distro.mongodb.org/repo/debian-sysvinit/dists/dist/10gen/i18n/Translation-en
   # We need a minimum of 0.8.6, so use a PPA
   - sudo add-apt-repository ppa:danirus/buildbot -y
