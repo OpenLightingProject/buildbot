@@ -29,7 +29,8 @@ def LoadConfig(config_file):
 class SlaveConfig(object):
   def __init__(self, suffix, has_cpp_lint=False, has_js_lint=False,
                has_tcmalloc=False, is_slow=False, generate_doc=False,
-               generate_man=False, no_build=False):
+               generate_man=False, no_build=False, ola_slave=True,
+               ja_rule_slave=False):
     self._suffix = suffix
     self._has_cpp_lint = has_cpp_lint
     self._has_js_lint = has_js_lint
@@ -38,6 +39,8 @@ class SlaveConfig(object):
     self._generate_doc = generate_doc
     self._generate_man = generate_man
     self._no_build = no_build
+    self._ola_slave = ola_slave
+    self._ja_rule_slave = ja_rule_slave
 
   @property
   def suffix(self):
@@ -71,6 +74,13 @@ class SlaveConfig(object):
   def no_build(self):
     return self._no_build
 
+  @property
+  def ola_slave(self):
+    return self._ola_slave
+
+  @property
+  def ja_rule_slave(self):
+    return self._ja_rule_slave
 
 class BuildSlave(object):
   def __init__(self, platform, arch, slave_config):
@@ -84,6 +94,8 @@ class BuildSlave(object):
     self._generate_doc = slave_config.generate_doc
     self._generate_man = slave_config.generate_man
     self._no_build = slave_config.no_build
+    self._ola_slave = slave_config.ola_slave
+    self._ja_rule_slave = slave_config.ja_rule_slave
 
   def name(self):
     """Return the name of this slave."""
@@ -126,6 +138,14 @@ class BuildSlave(object):
   def no_build(self):
     return self._no_build
 
+  @property
+  def ola_slave(self):
+    return self._ola_slave
+
+  @property
+  def ja_rule_slave(self):
+    return self._ja_rule_slave
+
 def HasCPPLintFilter(slave):
   """Filter on slaves that have C++ lint installed."""
   return slave.has_cpp_lint
@@ -154,6 +174,14 @@ def HasBuild(slave):
   """Filter on slaves that perform builds."""
   return not slave.no_build
 
+def OlaSlave(slave):
+  """Filter on slaves that are OLA slaves."""
+  return slave.ola_slave
+
+def JaRuleSlave(slave):
+  """Filter on slaves that are Ja-Rule slaves."""
+  return slave.ja_rule_slave
+
 class SlaveStore(object):
   """Holds the BuildSlave objects."""
   def __init__(self, slave_config):
@@ -163,9 +191,12 @@ class SlaveStore(object):
         for slave in slave_names:
           self._slaves.append(BuildSlave(platform, arch, slave))
 
-  def GetSlaves(self, slave_filter=None):
-    """Returns all slaves matching the optional filter."""
-    if slave_filter is None:
-      return self._slaves[:]
+  def GetSlaves(self, project_filter=None, slave_filter=None):
+    """Returns all slaves matching the optional filter(s)."""
+    if project_filter is None:
+      if slave_filter is None:
+        return self._slaves[:]
+      else:
+        return [s for s in self._slaves if slave_filter(s)]
     else:
-      return [s for s in self._slaves if slave_filter(s)]
+      return [s for s in self._slaves if project_filter(s) and slave_filter(s)]
