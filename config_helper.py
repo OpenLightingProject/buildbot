@@ -28,13 +28,14 @@ def LoadConfig(config_file):
 
 class SlaveConfig(object):
   def __init__(self, suffix, has_cpp_lint=False, has_js_lint=False,
-               has_tcmalloc=False, is_slow=False, generate_doc=False,
-               generate_man=False, no_build=False, ola_slave=True,
-               ja_rule_slave=False):
+               has_tcmalloc=False, has_ola_ja_rule_deps=True, is_slow=False,
+               generate_doc=False, generate_man=False, no_build=False,
+               ola_slave=True, ja_rule_slave=False):
     self._suffix = suffix
     self._has_cpp_lint = has_cpp_lint
     self._has_js_lint = has_js_lint
     self._has_tcmalloc = has_tcmalloc
+    self._has_ola_ja_rule_deps = has_ola_ja_rule_deps
     self._is_slow = is_slow
     self._generate_doc = generate_doc
     self._generate_man = generate_man
@@ -57,6 +58,10 @@ class SlaveConfig(object):
   @property
   def has_tcmalloc(self):
     return self._has_tcmalloc
+
+  @property
+  def has_ola_ja_rule_deps(self):
+    return self._has_ola_ja_rule_deps
 
   @property
   def is_slow(self):
@@ -90,6 +95,7 @@ class BuildSlave(object):
     self._has_cpp_lint = slave_config.has_cpp_lint
     self._has_js_lint = slave_config.has_js_lint
     self._has_tcmalloc = slave_config.has_tcmalloc
+    self._has_ola_ja_rule_deps = slave_config.has_ola_ja_rule_deps
     self._is_slow = slave_config.is_slow
     self._generate_doc = slave_config.generate_doc
     self._generate_man = slave_config.generate_man
@@ -121,6 +127,10 @@ class BuildSlave(object):
   @property
   def has_tcmalloc(self):
     return self._has_tcmalloc
+
+  @property
+  def has_ola_ja_rule_deps(self):
+    return self._has_ola_ja_rule_deps
 
   @property
   def is_slow(self):
@@ -157,6 +167,10 @@ def HasJSLintFilter(slave):
 def HasTCMalloc(slave):
   """Filter on slaves that have tcmalloc installed."""
   return slave.has_tcmalloc
+
+def HasOLAJaRuleDeps(slave):
+  """Filter on slaves that have OLA Ja Rule dependencies installed."""
+  return slave.has_ola_ja_rule_deps
 
 def IsSlow(slave):
   """Filter on slaves that are slow."""
