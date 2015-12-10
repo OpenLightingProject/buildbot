@@ -29,7 +29,7 @@ before_install:
 
 install:
   - sudo apt-get install -qq buildbot
-  - if [ "$TASK" = "flake8" ]; then pip install --user flake8; fi
+  - if [ "$TASK" = "flake8" ]; then sudo pip install flake8; fi
 
 notifications:
   irc:
