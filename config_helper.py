@@ -16,6 +16,7 @@
 
 import os
 
+
 def LoadConfig(config_file):
   """Load the buildbot config from a config file."""
   config = {}
@@ -87,6 +88,7 @@ class SlaveConfig(object):
   def ja_rule_slave(self):
     return self._ja_rule_slave
 
+
 class BuildSlave(object):
   def __init__(self, platform, arch, slave_config):
     self._platform = platform
@@ -156,45 +158,56 @@ class BuildSlave(object):
   def ja_rule_slave(self):
     return self._ja_rule_slave
 
+
 def HasCPPLintFilter(slave):
   """Filter on slaves that have C++ lint installed."""
   return slave.has_cpp_lint
+
 
 def HasJSLintFilter(slave):
   """Filter on slaves that have JS lint installed."""
   return slave.has_js_lint
 
+
 def HasTCMalloc(slave):
   """Filter on slaves that have tcmalloc installed."""
   return slave.has_tcmalloc
+
 
 def HasOLAJaRuleDeps(slave):
   """Filter on slaves that have OLA Ja Rule dependencies installed."""
   return slave.has_ola_ja_rule_deps
 
+
 def IsSlow(slave):
   """Filter on slaves that are slow."""
   return slave.is_slow
+
 
 def GenerateDoc(slave):
   """Filter on slaves that generate doxygen doc."""
   return slave.generate_doc
 
+
 def GenerateMan(slave):
   """Filter on slaves that generate man pages."""
   return slave.generate_man
+
 
 def HasBuild(slave):
   """Filter on slaves that perform builds."""
   return not slave.no_build
 
+
 def OlaSlave(slave):
   """Filter on slaves that are OLA slaves."""
   return slave.ola_slave
 
+
 def JaRuleSlave(slave):
   """Filter on slaves that are Ja-Rule slaves."""
   return slave.ja_rule_slave
+
 
 class SlaveStore(object):
   """Holds the BuildSlave objects."""
