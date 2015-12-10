@@ -2,18 +2,20 @@
 
 language: python
 
-python:
-  - "2.6"
-    env: TASK='checkconfig'
-  - "2.7"
-    env: TASK='checkconfig'
-#  - "3.2" # buildbot does not currently support Python 3
-#    env: TASK='test'
-#  - "3.3" # buildbot does not currently support Python 3
-#    env: TASK='test'
-#  - "pypy" # issues with travis halting during buildbot setup
-#    env: TASK='test'
-  - env: TASK='flake8'
+matrix:
+  fast_finish: true
+  include:
+   - env: TASK='flake8'
+   - python: "2.6"
+     env: TASK='checkconfig'
+   - python: "2.7"
+     env: TASK='checkconfig'
+#   - python: "3.2" # buildbot does not currently support Python 3
+#     env: TASK='checkconfig'
+#  - python: "3.3" # buildbot does not currently support Python 3
+#     env: TASK='checkconfig'
+#  - python: "pypy" # issues with travis halting during buildbot setup
+#     env: TASK='checkconfig'
 
 script:
   - "bash -ex .travis-ci.sh"
