@@ -2,12 +2,20 @@
 
 language: python
 
-python:
-  - "2.6"
-  - "2.7"
-#  - "3.2" # buildbot does not currently support Python 3
-#  - "3.3" # buildbot does not currently support Python 3
-#  - "pypy" # issues with travis halting during buildbot setup
+matrix:
+  fast_finish: true
+  include:
+   - env: TASK='flake8'
+   - python: "2.6"
+     env: TASK='checkconfig'
+   - python: "2.7"
+     env: TASK='checkconfig'
+#   - python: "3.2" # buildbot does not currently support Python 3
+#     env: TASK='checkconfig'
+#  - python: "3.3" # buildbot does not currently support Python 3
+#     env: TASK='checkconfig'
+#  - python: "pypy" # issues with travis halting during buildbot setup
+#     env: TASK='checkconfig'
 
 script:
   - "bash -ex .travis-ci.sh"
@@ -21,6 +29,7 @@ before_install:
 
 install:
   - sudo apt-get install -qq buildbot
+  - if [ "$TASK" = "flake8" ]; then sudo pip install flake8; fi
 
 notifications:
   irc:

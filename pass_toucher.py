@@ -26,7 +26,7 @@ print "Starting"
 
 for slave in slaves.GetSlaves():
   print "Checking slave %s" % slave.name()
-  pass_path = slave.password_file_path();
+  pass_path = slave.password_file_path()
   if (not os.path.isfile(pass_path)) and (not os.path.exists(pass_path)):
     print "\tPassword file %s doesn't exist, creating a dummy one" % pass_path
     open(pass_path, "a").close()
