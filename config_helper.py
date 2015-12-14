@@ -227,3 +227,8 @@ class SlaveStore(object):
         return [s for s in self._slaves if slave_filter(s)]
     else:
       return [s for s in self._slaves if project_filter(s) and slave_filter(s)]
+  
+  
+def BuildRepoURL(repo):
+  """Build a repo URL from it's constituent parts."""
+  return "%s%s%s" % (config['BASE_URL'], repo, config['REPO_STUB'])
