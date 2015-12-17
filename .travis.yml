@@ -31,7 +31,7 @@ before_install:
 install:
   - sudo apt-get install -qq buildbot
   - if [ "$TASK" = "flake8" ]; then sudo pip install flake8; fi
-  - if [ "$TASK" = "pychecker" ]; then "sudo pip install http://sourceforge.net/projects/pychecker/files/pychecker/0.8.19/pychecker-0.8.19.tar.gz/download"; fi
+  - if [ "$TASK" = "pychecker" ]; then "wget http://sourceforge.net/projects/pychecker/files/pychecker/0.8.19/pychecker-0.8.19.tar.gz/download -O pychecker-0.8.19.tar.gz; sudo pip install ./pychecker-0.8.19.tar.gz"; fi
 
 notifications:
   irc:
