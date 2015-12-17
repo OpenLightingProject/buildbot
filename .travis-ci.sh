@@ -8,7 +8,8 @@ if [[ $TASK = 'flake8' ]]; then
   # build.config has to be checked seperately, as it's not strictly a Python file
   flake8 --max-line-length 80 --exclude *_pb2.py,.git,__pycache --ignore E111,E121,E129,F821 build.config
 elif [[ $TASK = 'pychecker' ]]; then
-  pychecker build.config config_helper.py master.cfg pass_toucher.py
+  pychecker --no-import --quiet build.config master.cfg 
+  pychecker --quiet --maxargs 12 config_helper.py pass_toucher.py
 else
   # Otherwise run checkconfig as normal
   mkdir buildbot && cd buildbot && buildbot create-master master && \
