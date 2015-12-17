@@ -6,6 +6,7 @@ matrix:
   fast_finish: true
   include:
    - env: TASK='flake8'
+   - env: TASK='pychecker'
    - python: "2.6"
      env: TASK='checkconfig'
    - python: "2.7"
@@ -30,6 +31,7 @@ before_install:
 install:
   - sudo apt-get install -qq buildbot
   - if [ "$TASK" = "flake8" ]; then sudo pip install flake8; fi
+  - if [ "$TASK" = "pychecker" ]; then "sudo pip install http://sourceforge.net/projects/pychecker/files/pychecker/0.8.19/pychecker-0.8.19.tar.gz/download"; fi
 
 notifications:
   irc:
