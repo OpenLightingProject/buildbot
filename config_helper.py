@@ -20,10 +20,10 @@ import os
 def LoadConfig(config_file):
   """Load the buildbot config from a config file."""
   config = {}
-  globals = {
+  global_dict = {
     'Slave': SlaveConfig,
   }
-  execfile(config_file, globals, config)
+  execfile(config_file, global_dict, config)
   return config
 
 
