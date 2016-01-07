@@ -19,6 +19,7 @@
 import os
 import config_helper
 
+
 def main():
   config = config_helper.LoadConfig('build.config')
   slaves = config_helper.SlaveStore(config['SLAVES'])
