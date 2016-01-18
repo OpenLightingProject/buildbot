@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/OpenLightingProject/buildbot.svg?branch=master)](https://travis-ci.org/OpenLightingProject/buildbot)
+
 Buildbot Configuration
 ======================
 
