@@ -28,7 +28,7 @@ before_install:
 
 install:
   # We need a minimum of 0.8.12, so install via pip
-  - sudo pip install buildbot
+  - sudo pip install buildbot==0.8.12
   - if [ "$TASK" = "flake8" ]; then sudo pip install flake8; fi
   - if [ "$TASK" = "pychecker" ]; then sudo pip install http://sourceforge.net/projects/pychecker/files/pychecker/0.8.19/pychecker-0.8.19.tar.gz/download; fi
 
