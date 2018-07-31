@@ -22,8 +22,6 @@ script:
   - "bash -ex .travis-ci.sh"
 
 before_install:
-  # Remove some flaky repos that keep timing out
-  - sudo rm /etc/apt/sources.list.d/mongodb.list
   - sudo apt-get update -qq
 
 install:
