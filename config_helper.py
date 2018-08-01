@@ -30,14 +30,15 @@ def LoadConfig(config_file):
 class SlaveConfig(object):
   def __init__(self, suffix, has_cpp_lint=False, has_js_lint=False,
                has_tcmalloc=False, has_ola_ja_rule_deps=True, is_slow=False,
-               generate_doc=False, generate_man=False, no_build=False,
-               ola_slave=True, ja_rule_slave=False):
+               generate_conf=False, generate_doc=False, generate_man=False,
+               no_build=False, ola_slave=True, ja_rule_slave=False):
     self._suffix = suffix
     self._has_cpp_lint = has_cpp_lint
     self._has_js_lint = has_js_lint
     self._has_tcmalloc = has_tcmalloc
     self._has_ola_ja_rule_deps = has_ola_ja_rule_deps
     self._is_slow = is_slow
+    self._generate_conf = generate_conf
     self._generate_doc = generate_doc
     self._generate_man = generate_man
     self._no_build = no_build
@@ -67,6 +68,10 @@ class SlaveConfig(object):
   @property
   def is_slow(self):
     return self._is_slow
+
+  @property
+  def generate_conf(self):
+    return self._generate_conf
 
   @property
   def generate_doc(self):
@@ -99,6 +104,7 @@ class BuildSlave(object):
     self._has_tcmalloc = slave_config.has_tcmalloc
     self._has_ola_ja_rule_deps = slave_config.has_ola_ja_rule_deps
     self._is_slow = slave_config.is_slow
+    self._generate_conf = slave_config.generate_conf
     self._generate_doc = slave_config.generate_doc
     self._generate_man = slave_config.generate_man
     self._no_build = slave_config.no_build
@@ -137,6 +143,10 @@ class BuildSlave(object):
   @property
   def is_slow(self):
     return self._is_slow
+
+  @property
+  def generate_conf(self):
+    return self._generate_conf
 
   @property
   def generate_doc(self):
@@ -182,6 +192,11 @@ def HasOLAJaRuleDeps(slave):
 def IsSlow(slave):
   """Filter on slaves that are slow."""
   return slave.is_slow
+
+
+def GenerateConf(slave):
+  """Filter on slaves that generate conf pages."""
+  return slave.generate_conf
 
 
 def GenerateDoc(slave):
